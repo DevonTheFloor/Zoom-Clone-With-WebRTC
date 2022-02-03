@@ -17,13 +17,17 @@ app.get('/:room', (req, res) => {
 
 io.on('connection', socket => {
   socket.on('join-room', (roomId, userId) => {
+    console.log('Socket ON join room')
     socket.join(roomId)
+    console.log('Room Id :', roomId)
     socket.to(roomId).broadcast.emit('user-connected', userId)
+    console.log('BroadCast EMiT !!')
 
     socket.on('disconnect', () => {
+      console.log('Socket ON DISCONNECT')
       socket.to(roomId).broadcast.emit('user-disconnected', userId)
     })
   })
 })
 
-server.listen(80)
+server.listen(3030)
